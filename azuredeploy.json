@@ -22,28 +22,25 @@
             }
         },
 		"elkserver_status": {
-            "type": "string",
-			"maxLength": 50,
+            "type": "string",			
             "metadata": {
-                "description": " status to determine whether to install elasticsearch, kibana,logstash. Default is present, if you are interested in installing beats alone, keep the state as absent."
+                "description": " status to determine whether to install elasticsearch, kibana,logstash."
             },
-			"defaultValue": "( [elasticsearch]='present' [kibana]='present' [metricbeat]='present' )",
+			"defaultValue": "( [elasticsearch]='present' [kibana]='present' [logstash]='present' )"
 			},
 		"beat_status": {
-            "type": "string",
-			"maxLength": 50,
+            "type": "string",			
             "metadata": {
                 "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
             },
-			"defaultValue": "( [topbeat]='present' [filebeat]='present' [metricbeat]='present' )",
+			"defaultValue": "( [topbeat]='present' [filebeat]='present' [metricbeat]='present' )"
 			},
 		"services_status": {
-            "type": "string",
-			"maxLength": 50,
+            "type": "string",			
             "metadata": {
                 "description": " status to determine whether to install nginx, apache2,mysql."
             },
-			"defaultValue": "( [nginx]='present' [apache2]='present' [mysql]='present' )",
+			"defaultValue": "( [nginx]='present' [apache2]='present' [mysql]='present' )"
 			},		
 		"_artifactsLocation": {
           "type": "string",
@@ -214,7 +211,7 @@
                         "timestamp": 16012018
                     },
                     "protectedSettings": {
-                        "commandToExecute": "[concat('sh elksetupscript.sh',' ',variables('_configfilelocation'),' ',parameters('elkserver_status'),' ',parameters('beat_status'),' ',parameters('services_status')]"
+                        "commandToExecute": "[concat('sh elksetupscript.sh',' ',variables('_configfilelocation'),' ',parameters('elkserver_status'),' ',parameters('beat_status'),' ',parameters('services_status'))]"
                     }
 
                 }

@@ -8,7 +8,7 @@
     "sshPublicKey": {
       "value": "\"---- BEGIN SSH2 PUBLIC KEY ---- Comment: \"rsa-key-20180111\" AAAAB3NzaC1yc2EAAAABJQAAAQEAkBYePk6XfY7mZavwQugZpvcHA9yKwpcjaONx SYDZfzz2faimewpiBVHBA4zp6F3PxwGsyWwhW+Zr6ab9QODAW/rFX7TUkY0y3nv6 tUVPJjRq6KB8yOM5k0P5TOtCRhMQGB51avUeo/gzshGqST53CBHHupHzFTZswJ5W qx/ELlQNBYBp/paLasPzJe87XaJRQGJzuI7H3kw3LYitNiYjt5dcNNDQr/9MK4pK 0j+68tvGR9Iis1ytq0Dih61ZdiOhfr+qxPdTFMrgVH3Vm6rWE5+EZ2pzemlQ1m7e Gf0yvFfrwCrVjn5UkX/bO8elWNt7w21snigJQlXalNRb2/FXew== ---- END SSH2 PUBLIC KEY ----\"\""
     },
-    "tigDnsPrefix": {
+    "elkDnsPrefix": {
       "value": "gen-unique"
     }
   }
