@@ -21,7 +21,7 @@ services:
     command: nginx -g 'daemon off;'
     volumes:
       #Logs are mounted to a relative path. These are also accessed by Filebeat and consumed by the Nginx module
-      - ./samplelogs/nginx/:/var/logs/nginx/
+      - ./logs/nginx/:/var/logs/nginx/
 
   #Apache2 container
   apache2:
@@ -33,7 +33,7 @@ services:
     ports: ['8000:80']
     volumes:
       #Logs are mounted to a relative path. These are also accessed by Filebeat and consumed by the Apache module
-      - ./samplelogs/apache2/:/var/logs/apache2/
+      - ./logs/apache2/:/var/logs/apache2/
 
   #Mysql container
   mysql:
@@ -50,7 +50,7 @@ services:
       #Use named volume so mysql data is persisted across restart
       - mysqldata:/var/lib/mysql/
       #Logs are mounted to a relative path. These are also accessed by Filebeat and consumed by the Mysql module
-      - ./samplelogs/mysql:/var/logs/mysql/
+      - ./logs/mysql:/var/logs/mysql/
  
 volumes:
   #Mysql data

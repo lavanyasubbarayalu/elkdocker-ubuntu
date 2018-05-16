@@ -8,6 +8,12 @@ servicestatus=$4
 HostIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
 elkserver=HostIP
 elkbeats=HostIP
+
+echo $elkstack
+echo $elkserverstatus
+echo $beatstatus
+echo $servicestatus
+
 # filebeat_status="absent"
 # metricbeat_status="present"
 # packetbeat_status="absent"
@@ -25,48 +31,61 @@ apt-get install ansible -y
 apt-get install unzip -y
 
 cd /home/
-
 if [ -e elkstack.* ];
 then
- if [ -d /home/elkstack ];
- then
-       rm -rf elkstack.*
-rm -rf /home/elkstack
+  if [ -d /home/elkstack ];
+  then
+        rm -rf elkstack.*
+	rm -rf /home/elkstack
 	echo "directory delete"
- fi  
+  fi  
 fi
+
 wget $elkstack
 unzip elkstack.zip -d /home/elkstack/
 
-decalre -A elkserver0=$elkserverstatus
-declare -A beat0=$beatstatus
-declare -A service0=$servicestatus
 
-declare -n elkserver
-for elkserver in ${!elkserver@}; do
-    es_status=${elkserver[elasticsearch]}
-    kibana_status=${elkserver[kibana]}
-	logstash_status=${elkserver[logstash]}
-done
+# #elkserver
+# els_status=${elkserverstatus[0]}
+# ks_status=${elkserverstatus[1]}
+# lgstash_status=${elkserverstatus[2]}
+# es_state=${els_status#*_}
+# kibana_status=${ks_status#*_}
+# logstash_status=${lgstash_status#*_}
 
-##have to assign the variable to filebeat status.
-declare -n beat
-for beat in ${!beat@}; do
-    filebeat_status=${beat[topbeat]}
-    metricbeat_status=${beat[metricbeat]}
-	packetbeat_status=${beat[packetbeat]}
-done
+# echo $es_state $kibana_status $logstash_status
 
-declare -n service
-for beat in ${!service@}; do
-    nginx_status_status=${service[nginx]}
-    apache_status_status=${service[apache]}
-	mysql_status=${service[mysql]}
-done
+# #for beats
+# fileb_status=${beatstatus[0]}
+# pktbeat_status=${beatstatus[1]}
+# metricbt_status=${beatstatus[2]}
 
-echo $filebeat_status
-echo $metricbeat_status
-echo $packetbeat_status
+# filebeat_status=${fileb_status#*_}
+# packetbeat_status=${pktbeat_status#*_}
+# metricbeat_status=${metricbt_status#*_}
+
+# echo $filebeat_status $packetbeat_status $metricbeat_status
+
+# #for services
+# ngin_stat=${servicestatus[0]}
+# apache_stat=${servicestatus[1]}
+# msql_stat=${servicestatus[2]}
+
+# nginx_status=${ngin_stat#*_}
+# apache_status=${apache_stat#*_}
+# mysql_status=${msql_stat#*_}
+
+echo $nginx_status $apache_status $mysql_status
+
+es_state='present'
+kibana_status='present'
+logstash_status='present'
+filebeat_status='present'
+packetbeat_status='present'
+metricbeat_status='present'
+nginx_status='present'
+apache_status='present'
+mysql_status='present'
 
 ## add condition for installing beats and server. 
 HOME=/root ansible-playbook /home/elkstack/elkdocker_install.yml  --extra-vars "HostIP=$HostIP es_state=$es_state kibana_state=$kibana_status logstash_state=$logstash_status filebeat_state=$filebeat_status metricbeat_state=$metricbeat_status packetbeat_state=$packetbeat_status nginx_state=$nginx_status apache2_state=$apache_status mysql_state=$mysql_status" -vvv

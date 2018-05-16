@@ -26,28 +26,28 @@
             "metadata": {
                 "description": " status to determine whether to install elasticsearch, kibana,logstash."
             },
-			"defaultValue": "( [elasticsearch]='present' [kibana]='present' [logstash]='present' )"
+			"defaultValue": "'('elasticsearch_present' 'kibana_present' 'logstash_present')'"
 			},
 		"beat_status": {
             "type": "string",			
             "metadata": {
                 "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
             },
-			"defaultValue": "( [topbeat]='present' [filebeat]='present' [metricbeat]='present' )"
+			"defaultValue": "'('filebeat_present' 'packet_present' 'metricbeat_present')'"
 			},
 		"services_status": {
             "type": "string",			
             "metadata": {
                 "description": " status to determine whether to install nginx, apache2,mysql."
             },
-			"defaultValue": "( [nginx]='present' [apache2]='present' [mysql]='present' )"
+			"defaultValue": "'('nginx_present' 'apache2_present' 'mysql_present')'"
 			},		
 		"_artifactsLocation": {
           "type": "string",
           "metadata": {
               "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
           },
-          "defaultValue": "https://raw.githubusercontent.com/lavanyasubbarayalu/master/elkdocker-ubuntu/"
+          "defaultValue": "https://raw.githubusercontent.com/lavanyasubbarayalu/elkdocker-ubuntu/master/"
       },
       "_artifactsLocationSasToken": {
           "type": "securestring",
@@ -148,7 +148,7 @@
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_D1_v2"
+                    "vmSize": "Standard_D2S_v3"
                 },
                 "osProfile": {
                     "computerName": "[variables('vmName')]",
@@ -208,10 +208,11 @@
                         "fileUris": [
                             "[concat(parameters('_artifactsLocation'),'elkstack/',variables('_extensionScript'),parameters('_artifactsLocationSasToken'))]"
                         ],
-                        "timestamp": 16012018
+                        "timestamp": 11552018
                     },
                     "protectedSettings": {
-                        "commandToExecute": "[concat('sh elksetupscript.sh',' ',variables('_configfilelocation'),' ',parameters('elkserver_status'),' ',parameters('beat_status'),' ',parameters('services_status'))]"
+                        "commandToExecute": "[concat('sh elksetupscript.sh',' ',variables('_configfilelocation'),'  ',parameters('elkserver_status'),'  ',parameters('beat_status'),'  ',parameters('services_status'))]"
+						
                     }
 
                 }
