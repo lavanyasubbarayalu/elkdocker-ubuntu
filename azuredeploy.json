@@ -26,22 +26,37 @@
             "metadata": {
                 "description": " status to determine whether to install elasticsearch, kibana,logstash."
             },
-			"defaultValue": "( [elasticsearch]='present' [kibana]='present' [logstash]='present' )"
+			"defaultValue": "present"
 			},
-		"beat_status": {
+		"filebeat_status": {
             "type": "string",			
             "metadata": {
                 "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
             },
-			"defaultValue": "( [topbeat]='present' [filebeat]='present' [metricbeat]='present' )"
+			"defaultValue": "present"
 			},
-		"services_status": {
+		"packetbeat_status": {
             "type": "string",			
             "metadata": {
-                "description": " status to determine whether to install nginx, apache2,mysql."
+                "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
             },
-			"defaultValue": "( [nginx]='present' [apache2]='present' [mysql]='present' )"
-			},		
+			"defaultValue": "present"
+			},
+		"metricbeat_status": {
+            "type": "string",			
+            "metadata": {
+                "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
+            },
+			"defaultValue": "present"
+			},
+		"servicesdocker_status": {
+            "type": "string",			
+            "metadata": {
+                "description": " status to determine whether to install nginx, apache2,mysql as docker containers for sample testing."
+            },
+			"defaultValue": "present"
+			},
+        
 		"_artifactsLocation": {
           "type": "string",
           "metadata": {
@@ -148,7 +163,7 @@
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_D1_v2"
+                    "vmSize": "Standard_D2S_v3"
                 },
                 "osProfile": {
                     "computerName": "[variables('vmName')]",
@@ -208,10 +223,11 @@
                         "fileUris": [
                             "[concat(parameters('_artifactsLocation'),'elkstack/',variables('_extensionScript'),parameters('_artifactsLocationSasToken'))]"
                         ],
-                        "timestamp": 16012018
+                        "timestamp": 11552018
                     },
                     "protectedSettings": {
-                        "commandToExecute": "[concat('sh elksetupscript.sh',' ',variables('_configfilelocation'),' ',parameters('elkserver_status'),' ',parameters('beat_status'),' ',parameters('services_status'))]"
+                        "commandToExecute": "[concat('sh elksetupscript.sh',' ',variables('_configfilelocation'),'  ',parameters('elkserver_status'),'  ',parameters('filebeat_status'),'  ',parameters('packetbeat_status'),'  ',parameters('metricbeat_status'),'  ',parameters('servicesdocker_status'))]"
+						
                     }
 
                 }
