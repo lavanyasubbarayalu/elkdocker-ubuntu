@@ -2,9 +2,9 @@
 
 # Script parameters from arguments
 elkstack=$1
-elkserverstatus=$2
-beatstatus=$3
-servicestatus=$4
+elkserverstatus=($2)
+beatstatus=($3)
+servicestatus=($4)
 HostIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
 elkserver=HostIP
 elkbeats=HostIP
@@ -45,35 +45,35 @@ wget $elkstack
 unzip elkstack.zip -d /home/elkstack/
 
 
-# #elkserver
-# els_status=${elkserverstatus[0]}
-# ks_status=${elkserverstatus[1]}
-# lgstash_status=${elkserverstatus[2]}
-# es_state=${els_status#*_}
-# kibana_status=${ks_status#*_}
-# logstash_status=${lgstash_status#*_}
+#elkserver
+els_status=${elkserverstatus[0]}
+ks_status=${elkserverstatus[1]}
+lgstash_status=${elkserverstatus[2]}
+es_state=${els_status#*_}
+kibana_status=${ks_status#*_}
+logstash_status=${lgstash_status#*_}
 
-# echo $es_state $kibana_status $logstash_status
+echo $es_state $kibana_status $logstash_status
 
-# #for beats
-# fileb_status=${beatstatus[0]}
-# pktbeat_status=${beatstatus[1]}
-# metricbt_status=${beatstatus[2]}
+#for beats
+fileb_status=${beatstatus[0]}
+pktbeat_status=${beatstatus[1]}
+metricbt_status=${beatstatus[2]}
 
-# filebeat_status=${fileb_status#*_}
-# packetbeat_status=${pktbeat_status#*_}
-# metricbeat_status=${metricbt_status#*_}
+filebeat_status=${fileb_status#*_}
+packetbeat_status=${pktbeat_status#*_}
+metricbeat_status=${metricbt_status#*_}
 
-# echo $filebeat_status $packetbeat_status $metricbeat_status
+echo $filebeat_status $packetbeat_status $metricbeat_status
 
-# #for services
-# ngin_stat=${servicestatus[0]}
-# apache_stat=${servicestatus[1]}
-# msql_stat=${servicestatus[2]}
+#for services
+ngin_stat=${servicestatus[0]}
+apache_stat=${servicestatus[1]}
+msql_stat=${servicestatus[2]}
 
-# nginx_status=${ngin_stat#*_}
-# apache_status=${apache_stat#*_}
-# mysql_status=${msql_stat#*_}
+nginx_status=${ngin_stat#*_}
+apache_status=${apache_stat#*_}
+mysql_status=${msql_stat#*_}
 
 echo $nginx_status $apache_status $mysql_status
 
