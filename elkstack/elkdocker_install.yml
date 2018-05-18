@@ -7,19 +7,15 @@
     kibana_user: elastic
     elasticsearch_password: changeme
     elasticsearch_user: elastic
-    elkserver_package:
-     - { 'name': 'elasticsearch', 'state': "{{es_state}}", 'version': 'latest' }
-     - { 'name': 'kibana', 'state': "{{kibana_state}}", 'version': 'latest' }
-     - { 'name': 'logstash', 'state': "{{logstash_state}}", 'version': 'latest' }
+    elkserver_package: {{ elkserver_status }}    
     beats_package:
-     - { 'name': 'filebeat', 'state': "{{filebeat_state}}", 'version': "{{beatversion}}" }
-     - { 'name': 'metricbeat', 'state': "{{metricbeat_state}}", 'version': "{{beatversion}}" }
-     - { 'name': 'packetbeat', 'state': "{{packetbeat_state}}", 'version': "{{beatversion}}" }
+     - { 'name': 'filebeat', 'state': "{{ filebeat_state }}", 'version': "{{beatversion}}" }
+     - { 'name': 'metricbeat', 'state': "{{ metricbeat_state }}", 'version': "{{beatversion}}" }
+     - { 'name': 'packetbeat', 'state': "{{ packetbeat_state }}", 'version': "{{beatversion}}" }
     services_package:
-     - { 'name': 'nginx', 'state': "{{nginx_state}}", 'version': 'latest' }
-     - { 'name': 'apache2', 'state': "{{apache2_state}}", 'version': 'latest' }
-     - { 'name': 'mysql', 'state': "{{mysql_state}}", 'version': 'latest' }
-    beats_output: "{{beats_output}}"
+     - { 'name': 'nginx', 'state': "{{ nginx_state }}", 'version': 'latest' }
+     - { 'name': 'apache2', 'state': "{{ apache2_state }}", 'version': 'latest' }
+     - { 'name': 'mysql', 'state': "{{ mysql_state }}", 'version': 'latest' }
   tasks: 
     - 
       args: 
@@ -50,25 +46,60 @@
     - 
       args: 
         chdir: /home/elkstack/elkserver/
-      command: "docker-compose -f docker-compose.yml up -d {{item.name}}"
+      command: "docker-compose -f docker-compose.yml up -d "
       name: "elkserver docker up"
-      when: "{{ item.state == 'present'}}" 
-      with_items: "{{elkserver_package}}"
+      when: "{{ elkserver_status.state == 'present'}}" 
+     
     - 
       args: 
         chdir: /home/elkstack/services/
       command: "docker-compose -f docker-compose-services.yml up -d {{item.name}}"
       name: "services docker up"
-      when: "{{ item.state == 'present'}}" 
-      with_items: "{{services_package}}"
-     	
+      when: "{{ item.state == 'present'}}"
+      with_items: "{{ services_package }}"      
+    - 
+      name: changing filebeat file with Apache module
+      template:
+        src: /home/elkstack/beats/templates/filebeat_apacheconfig.yml.jk2
+        dest: /home/temp1.txt
+      register: result
+      run_once: true
+    -  
+      name:
+      shell: cat /home/temp1.txt >> /home/elkstack/beats/config/filebeat/filebeat.yml
+      run_once: true
+      when: (apache2_state == "present") and (result.changed == true)	 
+    -  
+      name: changing filebeat file with Nginx module
+      template:
+         src: /home/elkstack/beats/templates/filebeat_nginxconfig.yml.jk2
+         dest: /home/temp2.txt
+      register: result1
+      run_once: true
+    -   
+      name:
+      shell: cat /home/temp2.txt >> /home/101-elasticstack/elkstack/beats/config/filebeat/filebeat.yml
+      run_once: true
+      when: (nginx_state == "present") and (result1.changed == true)
+    - 
+      name: changing filebeat file with MySQL module
+      template:
+        src: /home/101-elasticstack/elkstack/beats/templates/filebeat_mysqlconfig.yml.jk2
+        dest: /home/temp3.txt
+      register: result1
+      run_once: true
+    - 
+      name:
+      shell: cat /home/temp3.txt >> /home/101-elasticstack/elkstack/beats/config/filebeat/filebeat.yml
+      run_once: true
+      when: (mysql_state == "present") and (result1.changed == true)           	
     - 
       args: 
         chdir: /home/elkstack/beats/      
       command: "docker-compose -f docker-compose-beats.yml up -d {{item.name}}"
       name: "Beats docker up"
       when: "{{ item.state == 'present'}}"
-      with_items: "{{beats_package}}"		
+      with_items: "{{ beats_package }}"		
     - 
       name: "Wait 300 seconds for port 5601 to become open on the host, don't start checking for 10 seconds"
       wait_for: 
