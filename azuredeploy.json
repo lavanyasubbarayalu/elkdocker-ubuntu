@@ -236,7 +236,7 @@
                         "fileUris": [
                             "[concat(parameters('_artifactsLocation'),'elkstack/',variables('_extensionScript'),parameters('_artifactsLocationSasToken'))]"
                         ],
-                        "timestamp": 11552018
+                        "timestamp": 18052018
                     },
                     "protectedSettings": {
                         "commandToExecute": "[concat('sh elksetupscript.sh',' ',variables('_configfilelocation'),'  ',parameters('elkserver_status'),'  ',parameters('filebeat_status'),'  ',parameters('packetbeat_status'),'  ',parameters('metricbeat_status'),'  ',parameters('nginxservice_status'),'  ',parameters('apache2service_status'),'  ',parameters('mysqlservice_status'))]"
