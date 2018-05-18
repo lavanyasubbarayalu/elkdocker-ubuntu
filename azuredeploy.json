@@ -26,22 +26,50 @@
             "metadata": {
                 "description": " status to determine whether to install elasticsearch, kibana,logstash."
             },
-			"defaultValue": "'('elasticsearch_present' 'kibana_present' 'logstash_present')'"
+			"defaultValue": "present"
 			},
-		"beat_status": {
+		"filebeat_status": {
             "type": "string",			
             "metadata": {
                 "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
             },
-			"defaultValue": "'('filebeat_present' 'packet_present' 'metricbeat_present')'"
+			"defaultValue": "present"
 			},
-		"services_status": {
+		"packetbeat_status": {
             "type": "string",			
             "metadata": {
-                "description": " status to determine whether to install nginx, apache2,mysql."
+                "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
             },
-			"defaultValue": "'('nginx_present' 'apache2_present' 'mysql_present')'"
-			},		
+			"defaultValue": "present"
+			},
+		"metricbeat_status": {
+            "type": "string",			
+            "metadata": {
+                "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
+            },
+			"defaultValue": "present"
+			},
+		"nginxservice_status": {
+            "type": "string",			
+            "metadata": {
+                "description": " status to determine whether to install nginx as docker containers for logs."
+            },
+			"defaultValue": "present"
+			},
+		"apache2service_status": {
+            "type": "string",			
+            "metadata": {
+                "description": " status to determine whether to install apache2 for logs."
+            },
+			"defaultValue": "present"
+			},
+		"mysqlservice_status": {
+            "type": "string",			
+            "metadata": {
+                "description": " status to determine whether to install mysql for logs."
+            },
+			"defaultValue": "present"
+			},        
 		"_artifactsLocation": {
           "type": "string",
           "metadata": {
@@ -211,7 +239,7 @@
                         "timestamp": 11552018
                     },
                     "protectedSettings": {
-                        "commandToExecute": "[concat('sh elksetupscript.sh',' ',variables('_configfilelocation'),'  ',parameters('elkserver_status'),'  ',parameters('beat_status'),'  ',parameters('services_status'))]"
+                        "commandToExecute": "[concat('sh elksetupscript.sh',' ',variables('_configfilelocation'),'  ',parameters('elkserver_status'),'  ',parameters('filebeat_status'),'  ',parameters('packetbeat_status'),'  ',parameters('metricbeat_status'),'  ',parameters('nginxservice_status'),'  ',parameters('apache2service_status'),'  ',parameters('mysqlservice_status'))]"
 						
                     }
 
