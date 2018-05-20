@@ -31,28 +31,28 @@
 		"filebeat_status": {
             "type": "string",			
             "metadata": {
-                "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
+                "description": " status to determine whether to install filebeat."
             },
-			"defaultValue": "present"
+			"defaultValue": "absent"
 			},
 		"packetbeat_status": {
             "type": "string",			
             "metadata": {
-                "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
+                "description": " status to determine whether to install packetbeat."
             },
-			"defaultValue": "present"
+			"defaultValue": "absent"
 			},
 		"metricbeat_status": {
             "type": "string",			
             "metadata": {
-                "description": " status to determine whether to install filebeat, metricbeat,packetbeat."
+                "description": " status to determine whether to install  metricbeat."
             },
 			"defaultValue": "present"
 			},
 		"nginxservice_status": {
             "type": "string",			
             "metadata": {
-                "description": " status to determine whether to install nginx as docker containers for logs."
+                "description": " status to determine whether to install nginx to capture logs."
             },
 			"defaultValue": "present"
 			},

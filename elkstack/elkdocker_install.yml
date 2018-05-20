@@ -9,7 +9,9 @@
     elasticsearch_user: elastic
     elasticsearchIP: 127.0.0.1
     elkserver_package: "{{ elkserver_status }}"
-    beatversion: 6.2.4    
+    beatversion: 6.2.4
+    default_index_pattern: heartbeat-*
+    kibanaurl: "http://{{ elasticsearch_user }}:{{ elasticsearch_password }}@localhost:5601"    
     beats_package:
      - { 'name': 'configure_filebeat', 'state': "{{ filebeat_state }}", 'version': "{{beatversion}}" }
      - { 'name': 'configure_metricbeat', 'state': "{{ metricbeat_state }}", 'version': "{{beatversion}}" }
@@ -127,21 +129,21 @@
       when: "{{ item.state == 'present'}}"
       with_items: "{{ beats_package }}"		
     - 
-      name: "Wait 300 seconds for port 5601 to become open on the host, don't start checking for 10 seconds"
+      name: "Wait 10 seconds for port 5601 to become open on the host, don't start checking for 10 seconds"
       wait_for: 
         delay: 10
         port: 5601
     - 
-      name: "Wait 300 seconds for port 9200 to become open on the host, don't start checking for 10 seconds"
+      name: "Wait 10 seconds for port 9200 to become open on the host, don't start checking for 10 seconds"
       wait_for: 
         delay: 10
         port: 9200
     - 
       command: "curl -s http://localhost:9200/_cat/indices?pretty -u {{ elasticsearch_user }}:{{ elasticsearch_password }}"
       name: "check if elasticsearch returns any indices"
-    - 
-      command: "curl -s http://localhost:5601/status -u {{ kibana_user }}:{{ kibana_passwd }}"
-      name: "check if kibana can be accessed"
+    -
+      command: "curl -XPOST -H 'Content-Type: application/json' -H 'kbn-xsrf: anything' '{{ kibanaurl }}/api/kibana/settings/defaultIndex' -d@kibanaindexdefault.json"
+      name: "set default index pattern"
     - 
       debug: 
         var: HostIP
