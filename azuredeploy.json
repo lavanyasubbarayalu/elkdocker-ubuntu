@@ -33,14 +33,14 @@
             "metadata": {
                 "description": " status to determine whether to install filebeat."
             },
-			"defaultValue": "absent"
+			"defaultValue": "present"
 			},
 		"packetbeat_status": {
             "type": "string",			
             "metadata": {
                 "description": " status to determine whether to install packetbeat."
             },
-			"defaultValue": "absent"
+			"defaultValue": "present"
 			},
 		"metricbeat_status": {
             "type": "string",			
