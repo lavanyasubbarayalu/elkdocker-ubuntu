@@ -16,7 +16,7 @@
      - { 'name': 'packetbeat', 'state': "{{ packetbeat_state }}", 'version': "{{beatversion}}" }
      - { 'name': 'configure_stack', 'state': "present", 'version': "{{beatversion}}" }																					   
     services_package:
-     - { 'name': 'nginx', 'state': "{{ nginx_state }}", 'version': 'latest' }
+     - { 'name': 'nginx', 'state': "absent", 'version': 'latest' }
      - { 'name': 'apache2', 'state': "{{ apache2_state }}", 'version': 'latest' }
      - { 'name': 'mysql', 'state': "{{ mysql_state }}", 'version': 'latest' }
   tasks: 
