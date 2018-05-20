@@ -17,7 +17,7 @@ apt-get update
 apt-get install software-properties-common -y
 apt-add-repository ppa:ansible/ansible -y
 apt-get update
-apt-get install systemd -y
+#apt-get install systemd -y
 apt-get install ansible -y
 apt-get install unzip -y
 

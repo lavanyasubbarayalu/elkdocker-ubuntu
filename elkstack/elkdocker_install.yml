@@ -50,11 +50,14 @@
         chdir: /home/elkstack/elkserver/
       command: "docker-compose -f docker-compose.yml up -d "
       name: "elkserver docker up"
-      when: "{{ elkserver_status == 'present'}}" 
+      when: "{{ elkserver_status == 'present'}}"
     - 
-      args: 
-        chdir: /home/elkstack/services/
-      command: "./install-nginx.sh"
+      file: 
+        mode: 420
+        path: /home/elkstack/services/install-nginx.sh
+      name: "change file permission"
+    - 
+      command: " sh /home/elkstack/services/install-nginx.sh"
       name: "nginx service up"
       when: "{{ nginx_state == 'present'}}"
     - 

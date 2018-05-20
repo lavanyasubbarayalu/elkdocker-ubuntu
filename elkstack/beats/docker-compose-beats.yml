@@ -24,14 +24,14 @@ services:
       #Mount the prospectors directory. Users can in turn add propspectors to this directory and they will be dynamically loaded
       - ./config/filebeat/prospectors.d/:/usr/share/filebeat/prospectors.d/:ro
       #Mount the nginx logs into the filebeat container so we can access and index them using the filebeat nginx module
-      - ./logs/nginx/:/var/log/nginx/
-      - /var/log/nginx/:/var/log/nginx/
+      - ./logs/nginx/:/var/logs/nginx/
+      - /var/log/nginx/:/var/logs/nginx/
       #Mount the apache2 logs into the filebeat container so we can access and index them using the filebeat apache2 module
-      - ./logs/apache2/:/var/log/apache2/
+      - ./logs/apache2/:/var/logs/apache2/
       #Mount the mysql logs into the filebeat container so we can access and and index them using the filebeat mysql module
-      - ./logs/mysql/:/var/log/mysql/
+      - ./logs/mysql/:/var/logs/mysql/
       #Mount the hosts system log directory. This represents the logs of the VM hosting docker. Consumed by the filebeat system module.
-      - /var/logs/:/var/log/host/:ro
+      - /var/logs/:/var/logs/host/:ro
       #Mount the docker logs for indexing by the custom prospector ./config/filebeat/prospectors.d
       #- /var/lib/docker/containers:/hostfs/var/lib/docker/containers
       #Named volume fsdata. This is used to persist the registry file between restarts, so to avoid data duplication
