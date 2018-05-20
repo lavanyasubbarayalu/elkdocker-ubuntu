@@ -6,8 +6,8 @@
       "value": "GEN-USERNAME"
     },
     "sshPublicKey": {
-      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAglgHOZm83UQSv0dBukUsdgj5hocx08e4vU3q q8fOelZ+HeUUgBulglFcNv/faIBAjp6q90tx8zmf92GKpD+nheJxKCC19h1gH11r XzJQsTt3+wqr0SoVORP+WnsR7rMUs09gcXu5PkZ2I7cLdzXduxLxKxSzp8zeBRp1 731+lgMxJ7Y8D8o4SSTlozYAup3DKBZDf42WKGSErp1W6egM0hZDk2XAd2YE/bTM OfELox2KqFEyJG6lHeC2ZuYMLpsYXrRLYRf7uT7Ui6h2rxmboHDjf6PoT8PpUAUv Nu5P8t4l+60GcAP957uxdQc9vksAoY+Gd+t+Z592cNkO935K6w== admin@localhost"
-    },
+      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjnrYEIUw2G0SmXKLqu+D8kRMkIPwFFs79hLS8inGbmt1gEWakExVTbhegkv+PQ30AEH3CwmOiVbre3Sf6RFOpf9/ydg/qebcQsMJs46eJ5z+u17zxCrL3heCInCLDSQ0/bKTmFVMciuxwVJv+la+C7DjdSZGOn059M/bWXA3l6heMZEebZL6fJuh3OwLtCjyDGeRycF2devdG5dD0nMlN7nnRPSp2qruO/RlrxE3JQvojPJBUyZq2ici22xlDFmDcYnp6wNd4/7LN8wRgQN6DIhruT1PpFcF1wK9SYR5Q7rDzW/J9rDIYd0rJXtfbYkoqe/30l4b0HQ3qT3i5QTvkQ== rsa-key-20180519"
+	  },
     "elkDnsPrefix": {
       "value": "gen-unique"
     }
