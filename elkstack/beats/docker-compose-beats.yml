@@ -24,13 +24,14 @@ services:
       #Mount the prospectors directory. Users can in turn add propspectors to this directory and they will be dynamically loaded
       - ./config/filebeat/prospectors.d/:/usr/share/filebeat/prospectors.d/:ro
       #Mount the nginx logs into the filebeat container so we can access and index them using the filebeat nginx module
-      - ./logs/nginx/:/var/logs/nginx/
+      - ./logs/nginx/:/var/log/nginx/
+      - /var/log/nginx/:/var/log/nginx/
       #Mount the apache2 logs into the filebeat container so we can access and index them using the filebeat apache2 module
-      - ./logs/apache2/:/var/logs/apache2/
+      - ./logs/apache2/:/var/log/apache2/
       #Mount the mysql logs into the filebeat container so we can access and and index them using the filebeat mysql module
-      - ./logs/mysql/:/var/logs/mysql/
+      - ./logs/mysql/:/var/log/mysql/
       #Mount the hosts system log directory. This represents the logs of the VM hosting docker. Consumed by the filebeat system module.
-      - /var/logs/:/var/logs/host/:ro
+      - /var/logs/:/var/log/host/:ro
       #Mount the docker logs for indexing by the custom prospector ./config/filebeat/prospectors.d
       #- /var/lib/docker/containers:/hostfs/var/lib/docker/containers
       #Named volume fsdata. This is used to persist the registry file between restarts, so to avoid data duplication
@@ -103,49 +104,50 @@ services:
    # depends_on: ['setup_packetbeat']
     
 
-  setup_filebeat:
-    image: docker.elastic.co/beats/filebeat:${TAG}
-    container_name: setup_filebeat
-    volumes: ['./scripts/setup-beat.sh:/usr/local/bin/setup-beat.sh:ro']
-    command: ['/bin/bash', '-c', 'cat /usr/local/bin/setup-beat.sh | tr -d "\r" | bash -s filebeat']
-    environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
-    networks: ['elkserver_elkstack']
+  # setup_beat:
+    # image: docker.elastic.co/beats/filebeat:${TAG}
+    # container_name: setup_beat
+    # volumes: ['./scripts/setup-beat.sh:/usr/local/bin/setup-beat.sh:ro']
+    # command: ['/bin/bash', '-c', 'cat /usr/local/bin/setup-beat.sh | tr -d "\r" | bash -s filebeat']
+    # environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
+    # networks: ['elkserver_elkstack']
     
 
-  setup_heartbeat:
-    image: docker.elastic.co/beats/heartbeat:${TAG}
-    container_name: setup_heartbeat
-    volumes: ['./scripts/setup-beat.sh:/usr/local/bin/setup-beat.sh:ro']
-    command: ['/bin/bash', '-c', 'cat /usr/local/bin/setup-beat.sh | tr -d "\r" | bash -s heartbeat']
-    environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
-    networks: ['elkserver_elkstack']
+  # setup_heartbeat:
+    # image: docker.elastic.co/beats/heartbeat:${TAG}
+    # container_name: setup_heartbeat
+    # volumes: ['./scripts/setup-beat.sh:/usr/local/bin/setup-beat.sh:ro']
+    # command: ['/bin/bash', '-c', 'cat /usr/local/bin/setup-beat.sh | tr -d "\r" | bash -s heartbeat']
+    # environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
+    # networks: ['elkserver_elkstack']
    
 
-  setup_metricbeat:
-    image: docker.elastic.co/beats/metricbeat:${TAG}
-    container_name: setup_metricbeat
-    volumes: ['./scripts/setup-beat.sh:/usr/local/bin/setup-beat.sh:ro']
-    command: ['/bin/bash', '-c', 'cat /usr/local/bin/setup-beat.sh | tr -d "\r" | bash -s metricbeat']
-    environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
-    networks: ['elkserver_elkstack']
+  # setup_metricbeat:
+    # image: docker.elastic.co/beats/metricbeat:${TAG}
+    # container_name: setup_metricbeat
+    # volumes: ['./scripts/setup-beat.sh:/usr/local/bin/setup-beat.sh:ro']
+    # command: ['/bin/bash', '-c', 'cat /usr/local/bin/setup-beat.sh | tr -d "\r" | bash -s metricbeat']
+    # environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
+    # networks: ['elkserver_elkstack']
  
 
-  setup_packetbeat:
-    image: docker.elastic.co/beats/packetbeat:${TAG}
-    container_name: setup_packetbeat
-    cap_add: ['NET_RAW', 'NET_ADMIN']
-    volumes: ['./scripts/setup-beat.sh:/usr/local/bin/setup-beat.sh:ro']
-    command: ['/bin/bash', '-c', 'cat /usr/local/bin/setup-beat.sh | tr -d "\r" | bash -s packetbeat']
-    environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
-    networks: ['elkserver_elkstack']
+  # setup_packetbeat:
+    # image: docker.elastic.co/beats/packetbeat:${TAG}
+    # container_name: setup_packetbeat
+    # cap_add: ['NET_RAW', 'NET_ADMIN']
+    # volumes: ['./scripts/setup-beat.sh:/usr/local/bin/setup-beat.sh:ro']
+    # command: ['/bin/bash', '-c', 'cat /usr/local/bin/setup-beat.sh | tr -d "\r" | bash -s packetbeat']
+    # environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
+    # networks: ['elkserver_elkstack']
  
   configure_stack:
     container_name: configure_stack
-    image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION}
+    image: docker.elastic.co/beats/metricbeat:${TAG}
     volumes: ['./config/init/configure-stack.sh:/usr/local/bin/configure-stack.sh:ro','./config/init/pipelines/:/usr/local/bin/pipelines/','./config/init/templates/:/usr/local/bin/templates/']
     command: ['/bin/bash', '-c', 'cat /usr/local/bin/configure-stack.sh | tr -d "\r" | bash']
     networks: ['elkserver_elkstack']
-    environment: ['ELASTIC_VERSION=${ELASTIC_VERSION}','ES_PASSWORD=${ES_PASSWORD}','DEFAULT_INDEX_PATTERN=${DEFAULT_INDEX_PATTERN}']
+    environment: ['ELASTIC_VERSION=${TAG}','ES_PASSWORD=${ELASTIC_PASSWORD}','DEFAULT_INDEX_PATTERN=${DEFAULT_INDEX_PATTERN}']
+	
 volumes:    
   #Filebeat data i.e. registry file
   fbdata:
