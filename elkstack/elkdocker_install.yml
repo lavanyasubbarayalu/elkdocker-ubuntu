@@ -14,7 +14,7 @@
      - { 'name': 'filebeat', 'state': "{{ filebeat_state }}", 'version': "{{beatversion}}" }
      - { 'name': 'metricbeat', 'state': "{{ metricbeat_state }}", 'version': "{{beatversion}}" }
      - { 'name': 'packetbeat', 'state': "{{ packetbeat_state }}", 'version': "{{beatversion}}" }
-     - { 'name': 'configure_stack', 'state': "present", 'version': "{{beatversion}}" }																					   
+     - { 'name': 'setup_beats', 'state': "present", 'version': "{{beatversion}}" }																					   
     services_package:
      - { 'name': 'nginx', 'state': "absent", 'version': 'latest' }
      - { 'name': 'apache2', 'state': "{{ apache2_state }}", 'version': 'latest' }
