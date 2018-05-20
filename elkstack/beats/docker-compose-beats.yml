@@ -102,14 +102,7 @@ services:
       - ./config/packetbeat/packetbeat.yml:/usr/share/packetbeat/packetbeat.yml:ro
       - ./samplelogs/nginx/:/var/log/nginx/
    # depends_on: ['setup_packetbeat']
-    
-  configure_stack:
-    container_name: configure_stack
-    image: docker.elastic.co/beats/metricbeat:${TAG}
-    volumes: ['./config/init/configure-stack.sh:/usr/local/bin/configure-stack.sh:ro','./config/init/pipelines/:/usr/local/bin/pipelines/','./config/init/templates/:/usr/local/bin/templates/']
-    command: ['/bin/bash', '-c', 'cat /usr/local/bin/configure-stack.sh | tr -d "\r" | bash']
-    networks: ['elkserver_elkstack']
-    environment: ['ELASTIC_VERSION=${TAG}','ES_PASSWORD=${ELASTIC_PASSWORD}','DEFAULT_INDEX_PATTERN=${DEFAULT_INDEX_PATTERN}']
+     
   # setup_beat:
     # image: docker.elastic.co/beats/filebeat:${TAG}
     # container_name: setup_beat
@@ -118,16 +111,14 @@ services:
     # environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
     # networks: ['elkserver_elkstack']
     
-
-  # setup_heartbeat:
-    # image: docker.elastic.co/beats/heartbeat:${TAG}
-    # container_name: setup_heartbeat
-    # volumes: ['./scripts/setup-beat.sh:/usr/local/bin/setup-beat.sh:ro']
-    # command: ['/bin/bash', '-c', 'cat /usr/local/bin/setup-beat.sh | tr -d "\r" | bash -s heartbeat']
-    # environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
-    # networks: ['elkserver_elkstack']
+  setup_beats:
+    image: docker.elastic.co/beats/heartbeat:${TAG}
+    container_name: setup_beats
+    volumes: ['./scripts/setup-beat.sh:/usr/local/bin/setup-beat.sh:ro']
+    command: ['/bin/bash', '-c', 'cat /usr/local/bin/setup-beat.sh | tr -d "\r" | bash -s heartbeat']
+    environment: ['ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
+    networks: ['elkserver_elkstack']
    
-
   # setup_metricbeat:
     # image: docker.elastic.co/beats/metricbeat:${TAG}
     # container_name: setup_metricbeat
