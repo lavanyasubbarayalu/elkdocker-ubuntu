@@ -45,8 +45,6 @@
     - 
       command: "pip install docker-compose"
       name: "install docker-compose"
-    
-	
     - 
       args: 
         chdir: /home/elkstack/elkserver/
