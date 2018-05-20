@@ -37,6 +37,6 @@ unzip elkstack.zip -d /home/elkstack/
 
 
 ## add condition for installing beats and server. 
-HOME=/root ansible-playbook /home/elkstack/elkdocker_install.yml  --extra-vars "HostIP=$HostIP es_state=$elkserverstatus filebeat_state=$filebeat_status packetbeat_state=$packetbeat_status metricbeat_state=$metricbeat_status  nginx_state=$nginxservice_status  apache2_state=$apache2service_status mysql_state=$mysqlservice_status" -vvv
+HOME=/root ansible-playbook /home/elkstack/elkdocker_install.yml  --extra-vars "HostIP=$HostIP elkserver_status=$elkserverstatus filebeat_state=$filebeat_status packetbeat_state=$packetbeat_status metricbeat_state=$metricbeat_status  nginx_state=$nginxservice_status  apache2_state=$apache2service_status mysql_state=$mysqlservice_status" -vvv
 
 
