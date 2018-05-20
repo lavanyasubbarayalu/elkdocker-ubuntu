@@ -146,8 +146,7 @@ services:
     volumes: ['./config/init/configure-stack.sh:/usr/local/bin/configure-stack.sh:ro','./config/init/pipelines/:/usr/local/bin/pipelines/','./config/init/templates/:/usr/local/bin/templates/']
     command: ['/bin/bash', '-c', 'cat /usr/local/bin/configure-stack.sh | tr -d "\r" | bash']
     networks: ['elkserver_elkstack']
-    environment: ['ELASTIC_VERSION=${TAG}','ES_PASSWORD=${ELASTIC_PASSWORD}','DEFAULT_INDEX_PATTERN=${DEFAULT_INDEX_PATTERN}']
-	
+    environment: ['ELASTIC_VERSION=${TAG}','ES_PASSWORD=${ELASTIC_PASSWORD}','DEFAULT_INDEX_PATTERN=${DEFAULT_INDEX_PATTERN}']	
 volumes:    
   #Filebeat data i.e. registry file
   fbdata:
