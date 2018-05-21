@@ -141,14 +141,14 @@
     - 
       command: "curl -s http://localhost:9200/_cat/indices?pretty -u {{ elasticsearch_user }}:{{ elasticsearch_password }}"
       name: "check if elasticsearch returns any indices"
-    - 
-      file: 
-        mode: 420
-        path: /home/elkstack/beats/setupkibanadefaultindex.sh
-      name: "change file permission"
-    -
-      command: sh /home/elkstack/beats/setupkibanadefaultindex.sh "{{ kibanaurl }}"
-      name: "set default index pattern"
+    # - 
+      # file: 
+        # mode: 420
+        # path: /home/elkstack/beats/setupkibanadefaultindex.sh
+      # name: "change file permission"
+    # -
+      # command: sh /home/elkstack/beats/setupkibanadefaultindex.sh  "{{ kibanaurl }}"
+      # name: "set default index pattern"
     - 
       debug: 
         var: HostIP
