@@ -6,7 +6,7 @@
       "value": "GEN-USERNAME"
     },
     "sshPublicKey": {
-      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjnrYEIUw2G0SmXKLqu+D8kRMkIPwFFs79hLS8inGbmt1gEWakExVTbhegkv+PQ30AEH3CwmOiVbre3Sf6RFOpf9/ydg/qebcQsMJs46eJ5z+u17zxCrL3heCInCLDSQ0/bKTmFVMciuxwVJv+la+C7DjdSZGOn059M/bWXA3l6heMZEebZL6fJuh3OwLtCjyDGeRycF2devdG5dD0nMlN7nnRPSp2qruO/RlrxE3JQvojPJBUyZq2ici22xlDFmDcYnp6wNd4/7LN8wRgQN6DIhruT1PpFcF1wK9SYR5Q7rDzW/J9rDIYd0rJXtfbYkoqe/30l4b0HQ3qT3i5QTvkQ== rsa-key-20180519"
+      "value": "GEN-SSH-PUB-KEY"
 	  },
     "elkDnsPrefix": {
       "value": "gen-unique"
