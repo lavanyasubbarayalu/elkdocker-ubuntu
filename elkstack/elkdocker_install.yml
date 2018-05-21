@@ -141,8 +141,13 @@
     - 
       command: "curl -s http://localhost:9200/_cat/indices?pretty -u {{ elasticsearch_user }}:{{ elasticsearch_password }}"
       name: "check if elasticsearch returns any indices"
+    - 
+      file: 
+        mode: 420
+        path: /home/elkstack/beats/setupkibanadefaultindex.sh
+      name: "change file permission"
     -
-      command: "curl -XPOST -H 'Content-Type: application/json' -H 'kbn-xsrf: anything' '{{ kibanaurl }}/api/kibana/settings/defaultIndex' -d@kibanaindexdefault.json"
+      command: sh /home/elkstack/beats/setupkibanadefaultindex.sh "{{ kibanaurl }}"
       name: "set default index pattern"
     - 
       debug: 
